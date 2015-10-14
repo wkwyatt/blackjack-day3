@@ -32,6 +32,9 @@ function deal() {
 	}
 
 	console.log(deck);
+
+	// document.getElementById("dealer-first-card") = "deck[0].toString";
+	// document.getElementsByClassName(".dealer .firstCard") = deck[0];
 }
 
 function hit() {

@@ -68,6 +68,10 @@
 	left: 790px;
 }
 
+.empty {
+	background: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSh9yarybRY1JS8uqoZvQgQEYqqkOxkzGd-dcNVTvKlm0pypS9g") center no-repeat;
+}
+
 .play-buttons {
 	position: relative;
 	/*top: 600px;*/
