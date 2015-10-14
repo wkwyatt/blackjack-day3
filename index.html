@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="style.css">
+	<script src="js/script.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id="game-wrapper">
+		<div class="game-board">
+			<div class="wins">
+				Wins: <span></span>
+			</div>
+			<div class="dealer row">
+				<div class="dealer score">Dealer Score: <br/><span></span>
+				</div>
+
+				<div class="dealer card firstCard">-
+				</div>
+				<div class="dealer card secondCard">-
+				</div>
+				<div class="dealer card thirdCard">-
+				</div>
+				<div class="dealer card fourthCard">-
+				</div>
+				<div class="dealer card fifthCard">-
+				</div>
+				<div class="dealer card sixthCard">-
+				</div>
+			</div>
+			<div class="player row">
+				<div class="player score">Player Score: <br/><span></span>
+				</div>
+
+				<div class="player card firstCard">-
+				</div>
+				<div class="player card secondCard">-
+				</div>
+				<div class="player card thirdCard">-
+				</div>
+				<div class="player card fourthCard">-
+				</div>
+				<div class="player card fifthCard">-
+				</div>
+				<div class="player card sixthCard">-
+				</div>
+			</div>
+			<div class="play-buttons">
+				<button id="draw-button" onclick="deal()">Deal</button>
+				<button id="hit-button" onclick="hit()">Hit</button>
+				<button id="stand-button" onclick="stand()">Stand</button>
+			</div>
+			<div class="game-result">
+				<span>YOU WON!</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

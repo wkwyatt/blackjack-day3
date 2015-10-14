@@ -1,0 +1,105 @@
+
+#game-wrapper {
+	display: block;
+	height: 100%;
+}
+
+.game-board {
+	display: block;
+	margin: 50px auto;
+	width: 100%;
+	max-width: 1024px;
+	height: 640px;
+	background-color: green;
+	border: 16px solid brown;
+	border-radius: 145px;
+}
+
+.row {
+	position: relative;
+	margin: 55px;
+	height: 175px;
+	/*background-color: red;*/
+}
+
+.score {	
+	position: absolute;
+	color: white;
+	font:36px Arial, serif;
+	height: 100%;
+	width: 200px;
+	text-align: center;
+	/*background-color: blue;*/
+}
+
+.card {
+	position: absolute;
+	height: 100%;
+	width: 100px;
+	text-align: center;
+	line-height: 100px;
+	vertical-align: middle;
+	background-color: white;
+	border-radius: 15px;
+	border:5px solid black;
+}
+
+.firstCard {
+	left: 215px;
+}
+
+.secondCard {
+	left: 330px;
+}
+
+.thirdCard {
+	left: 445px;
+}
+
+.fourthCard {
+	left: 560px;
+}
+
+.fifthCard {
+	left: 675px;
+}
+
+.sixthCard {
+	left: 790px;
+}
+
+.play-buttons {
+	position: relative;
+	/*top: 600px;*/
+	margin: 0 140px;
+}
+
+.wins {
+	margin: auto;
+	width: 75px;	
+	color: white;
+	font:24px Arial, serif;
+	background-color: red;
+}
+
+.game-result {
+	position: relative;
+	bottom:10px;
+	margin: 35px auto;
+	width: 75%;
+	color: white;
+	font:24px Arial, serif;
+	text-align: center;
+	background-color: red;
+}
+
+.play-buttons button {
+	margin: 0 20px;
+	font:24px Arial, serif;
+	position: relative;
+	width: 200px;
+	height: auto;
+	text-align: center;
+	background-color: black;
+	color: white;
+}
