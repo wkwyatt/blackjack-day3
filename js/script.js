@@ -108,9 +108,21 @@ function calculateTotal(hand, player) {
 	// get the valuel of each element in the user's hand array
 	for(i=0;i < hand.length;i++) {
 		// slice the letter of the array element
-		var cardValue = hand[i].slice(0, -1);
+		var cardValue = hand[i].slice(0, hand[i].indexOf("<"));
 
 		// TODO:check if card value is a face card or ace and set value
+		if(isNaN(cardValue)){
+			if(cardValue == 'A') {
+				// make value 1 or 11 based off user total
+				if(total > 21) {
+					cardValue = 1;
+				} else {
+					cardValue = 11;
+				}
+			} else {
+				cardValue = 10;
+			}
+		}
 
 		cardValue = Number(cardValue);
 		total += cardValue;
