@@ -1,16 +1,25 @@
-// TODO:check if card value is a face card or ace and set value
-// TODO: set deck function
 // TODO: If the player or the dealer has not busted check to see who has the higher value
-// TODO: reset game function
+
 
 var deck = [];
 var placeInDeck = 0;
+// AMOUNT OF CARDS FOR PLAYER
 var playerTotalCards = 2;
 var dealerTotalCards = 2;
+// ARRAY FOR PLAYERS HANDS
 var playerHand;
 var dealerHand;
+// IF PLAYER BUST BOOLEAN
 var dealerBust = false;
 var playerBust = false;
+// IF PLAYER STANDS 
+var playerStand = false;
+// PLAYER TOTALS
+var playerTotal = 0;
+var dealerTotal = 0;
+// SHORTCUTS FOR ELEMENT DIVS AND BUTTONS
+var message = document.getElementById("message");
+var buttons = document.getElementsByClassName("game-buttons");
 
 function setDeck(){
 	var suit;
@@ -57,7 +66,6 @@ function setDeck(){
 					alert("Error out of deck array index!");
 					break;
 			}
-			// deck.push(i+suit);
 		}
 	}
 
@@ -97,53 +105,90 @@ function deal() {
 	placeCard(playerHand[1], 'player', 'two');
 	placeCard(dealerHand[1], 'dealer', 'two');
 
-	calculateTotal(playerHand, 'player');
-	calculateTotal(dealerHand, 'dealer');
+	if((playerTotal === 21) && (dealerTotal === 21)) {
+		console.log(message);
+		message.innerHTML = "IT'S A DRAW!";
+		for(i = 0;i < buttons.length;i++){
+			buttons[i].disabled = true;
+		}
+	} else if(dealerTotal === 21) {
+		message.innerHTML = "DEALER HAS BLACKJACK!";
+		for(i = 0;i < buttons.length;i++){
+			buttons[i].disabled = true;
+		}
+	} else if(playerTotal === 21) {
+		message.innerHTML = "BLACKJACK! YOU WIN!!";
+		for(i = 0;i < buttons.length;i++){
+			buttons[i].disabled = true;
+		}
+	}
+	// calculateTotal(playerHand, 'player');
+	// calculateTotal(dealerHand, 'dealer');
 
 	document.getElementById('draw-button').disabled = true;
 }
 
 function calculateTotal(hand, player) {
 	var total = 0;
+	var AcesCount = 0;
 	// get the valuel of each element in the user's hand array
 	for(i=0;i < hand.length;i++) {
 		// slice the letter of the array element
 		var cardValue = hand[i].slice(0, hand[i].indexOf("<"));
 
-		// TODO:check if card value is a face card or ace and set value
+		// check if card value is a face card or ace and set value
 		if(isNaN(cardValue)){
 			if(cardValue == 'A') {
-				// make value 1 or 11 based off user total
-				if(total > 21) {
-					cardValue = 1;
-				} else {
-					cardValue = 11;
-				}
+				cardValue = 11;
+				AcesCount++;
 			} else {
 				cardValue = 10;
 			}
 		}
 
+		// make sure card value is number and add it to total
 		cardValue = Number(cardValue);
 		total += cardValue;
+
+		// handle aces being 1 or 11
+		while((AcesCount > 0) && (total > 21)){
+			AcesCount--;
+			total -= 10;
+		}
+
 	}
 
 	var user = player + "-total";
 	document.getElementById(user).innerHTML = total;
 
-	// check for bust 
-	if(total > 21) {
-		bust(player);
-	} 
+	// checkWin();
+
 	return total;
+}
+
+function Ace(total){
+	if(total <= 11) {
+		return total + 10;
+	} else {}
 }
 
 function placeCard(card, player, slot) {
 	var currId = player + "-card-" + slot;
 	var element = document.getElementById(currId);
 
+	// place card in html element
 	element.className = "card";
 	element.innerHTML = card;
+
+	// calc dealer total and check if they busted
+	dealerTotal = calculateTotal(dealerHand, 'dealer');
+	dealerBust = bust(dealerTotal);
+
+	// calc player total and check if they busted
+	playerTotal = calculateTotal(playerHand, 'player');
+	playerBust = bust(playerTotal);
+
+	checkWin();
 }
 
 function hit() {
@@ -164,23 +209,31 @@ function hit() {
 		break;
 	}
 
-	// place next card in deck
-	placeCard(deck[placeInDeck],'player',slot);
+	// place card in players hand
 	playerHand.push(deck[placeInDeck]);
+	// place card on table for user to see
+	placeCard(deck[placeInDeck],'player',slot);
+
 	// increment players total #of cards & location in the deck
 	playerTotalCards++;
 	placeInDeck++;
 
 	// calculate players total
-	calculateTotal(playerHand, 'player');
+	// calculateTotal(playerHand, 'player');
 }
 
-function bust(player) {
-	if(player) {
-		document.getElementById('message').innerHTML = "You have busted!  Better luck next time!";
+function bust(total) {
+	if(total > 21) {
+		// checkWin();
+		return true;
 	} else {
-		document.getElementById('message').innerHTML = "The dealer busted!  You win!";
+		return false;
 	}
+	// if(player) {
+	// 	document.getElementById('message').innerHTML = "You have busted!  Better luck next time!";
+	// } else {
+	// 	document.getElementById('message').innerHTML = "The dealer busted!  You win!";
+	// }
 }
 
 function blackJack(player) {
@@ -192,10 +245,12 @@ function blackJack(player) {
 }
 
 function stand() {
-	var dealerTotal = calculateTotal(dealerHand, 'dealer');
-	var playerTotal = calculateTotal(playerHand, 'player');
+	// var dealerTotal = calculateTotal(dealerHand, 'dealer');
+	// var playerTotal = calculateTotal(playerHand, 'player');
 	var slot;
-	while((dealerTotal < playerTotal) && (dealerTotal < 21)) {
+	
+
+	while(dealerTotal <= 17) {
 		switch (dealerTotalCards) {
 			case 2: 
 				slot = "three";
@@ -211,38 +266,57 @@ function stand() {
 			break;
 		}
 
-		placeCard(deck[placeInDeck], 'dealer', slot);
+		// put card in dealer hand
 		dealerHand.push(deck[placeInDeck]);
+		// place card on board for user
+		placeCard(deck[placeInDeck], 'dealer', slot);
+
+		// increment place in deck and dealer cards
 		placeInDeck++;
 		dealerTotalCards++;
-		dealerTotal = calculateTotal(dealerHand, 'dealer');
 	}
-	// Dealer has more than 17 
 
-	// check who won
+	playerStand = true;
 	checkWin();
+	// Dealer has more than 17 
 }
 
 function checkWin() {
 	// TODO: If the player or the dealer has not busted 
 	// check to see who has the higher value
-	var dealerTotal = calculateTotal(dealerHand, 'dealer');
-	var playerTotal = calculateTotal(playerHand, 'player');
-	var winner;
+	// var dealerTotal = calculateTotal(dealerHand, 'dealer');
+	// var playerTotal = calculateTotal(playerHand, 'player');
+	// var winner;
+	var gameOver = false;
 
-
-	if (((playerTotal > dealerTotal) && (playerTotal < 21)) || ((dealerTotal > 21) && (playerTotal < 21))) {
-		playerBust = true;
+	if(playerBust){
+		message.innerHTML = "BUSTED!! YOU LOST!"
+		gameOver = true;
+	} else if(dealerBust) {
+		message.innerHTML = "YOU WIN!! DEALER BUSTED"
+		gameOver = true;
 	} else {
-		if(playerTotal > dealerTotal) {
-			document.getElementById('message').innerHTML = "YOU WIN! You have " + playerTotal + " and the dealer has " + dealerTotal;
-		} else {
-			document.getElementById('message').innerHTML = "YOU LOST! You have " + dealerTotal + " and the dealer has " + playerTotal;
+		while(playerStand) {
+			if (playerTotal > dealerTotal) {
+				message.innerHTML = "YOU WIN! You have " + playerTotal + " and the dealer has " + dealerTotal;
+			} else if (playerTotal === dealerTotal) {
+				message.innerHTML = "IT'S A DRAW!"
+			} else {
+				message.innerHTML = "YOU LOST! You have " + playerTotal + " and the dealer has " + dealerTotal;
+			}
+			gameOver = true;	
+			playerStand = false;
+		}
+	}
+
+	if(gameOver){
+		for(i = 0;i < buttons.length;i++){
+			buttons[i].disabled = true;
 		}
 	}
 }
 
-// TODO: reset game function
+// reset game function
 function reset() {
     //empty the deck
     //reset the place in the deck
@@ -272,6 +346,9 @@ function reset() {
 
 	document.getElementById('player-total').innerHTML = 0;
 	document.getElementById('dealer-total').innerHTML = 0;
-	document.getElementById('draw-button').disabled = false;
+	for(i = 0;i < buttons.length;i++){
+		buttons[i].disabled = false;
+	}
 
+	playerStand = false;
 }
