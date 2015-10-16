@@ -49,6 +49,7 @@
 	height: 175px;
 	width: 100px;
 	text-align: center;
+	font-size: 24px;
 	line-height: 100px;
 	vertical-align: middle;
 	background-color: white;
@@ -56,43 +57,15 @@
 	border:5px solid black;
 }
 
-/*.firstCard {
-	left: 215px;
-}
-
-.secondCard {
-	left: 330px;
-}
-
-.thirdCard {
-	left: 445px;
-}
-
-.fourthCard {
-	left: 560px;
-}
-
-.fifthCard {
-	left: 675px;
-}
-
-.sixthCard {
-	left: 790px;
-}*/
-
 .empty {
 	background: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSh9yarybRY1JS8uqoZvQgQEYqqkOxkzGd-dcNVTvKlm0pypS9g") center no-repeat;
 }
 
-.play-buttons {
-	position: relative;
-	/*top: 600px;*/
-	text-align: center;
-}
+
 
 .wins {
 	margin: auto;
-	width: 90px;	
+	width: 200px;	
 	color: white;
 	font:24px Arial, serif;
 	background-color: red;
@@ -108,8 +81,13 @@
 	text-align: center;
 	background-color: red;
 }
+.play-buttons-div {
+	position: relative;
+	/*top: 600px;*/
+	text-align: center;
+}
 
-.play-buttons button {
+.play-buttons {
 	margin:5px auto;
 	font:24px Arial, serif;
 	position: relative;
@@ -120,6 +98,10 @@
 	color: white;
 }
 
+#reset-button {
+	float:right;
+	margin-right: 100px;
+}
 @media (max-width: 1072px) and (min-width: 871px) {
 	.score {
 		display: block;
@@ -137,10 +119,18 @@
 		margin: 0 auto;
 		float: none;
 	}
+	.row {
+		margin:10px;
+	}
 	.cards-row {
 		display: block;
 		width: 355px;
 		margin: auto;
+	}
+	#reset-button {
+		display: block;
+		margin:20px auto;
+		float: none;
 	}
 }
 
@@ -148,6 +138,14 @@
 	.score {
 		display: block;
 		margin: 0 auto;
+		float: none;
+	}
+	.row {
+		margin:10px;
+	}
+	#reset-button {
+		display: block;
+		margin:20px auto;
 		float: none;
 	}
 }
