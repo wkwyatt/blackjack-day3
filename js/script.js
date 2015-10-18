@@ -21,6 +21,7 @@ var dealerTotal = 0;
 var message = document.getElementById("message");
 var buttons = document.getElementsByClassName("game-buttons");
 
+// put cards in the deck array
 function setDeck(){
 	var suit;
 	for(s = 1;s <= 4;s++) {
@@ -72,6 +73,7 @@ function setDeck(){
 	console.log(deck);
 }
 
+// randomize the deck array
 function shuffleDeck() {
 	// set deck function
 	setDeck();
@@ -93,6 +95,7 @@ function shuffleDeck() {
 	return deck;
 }
 
+// deal the starting hand 
 function deal() {
 	var deck = shuffleDeck();
 	playerHand = [ deck[0], deck[2] ];
@@ -128,6 +131,7 @@ function deal() {
 	document.getElementById('draw-button').disabled = true;
 }
 
+// calculate the total of a users hand
 function calculateTotal(hand, player) {
 	var total = 0;
 	var AcesCount = 0;
@@ -166,12 +170,7 @@ function calculateTotal(hand, player) {
 	return total;
 }
 
-function Ace(total){
-	if(total <= 11) {
-		return total + 10;
-	} else {}
-}
-
+// place the card on the screen
 function placeCard(card, player, slot) {
 	var currId = player + "-card-" + slot;
 	var element = document.getElementById(currId);
@@ -191,6 +190,7 @@ function placeCard(card, player, slot) {
 	checkWin();
 }
 
+// give player a new card
 function hit() {
 	// set the slot label based from the total number of players cards
 	var slot;
@@ -222,6 +222,7 @@ function hit() {
 	// calculateTotal(playerHand, 'player');
 }
 
+// check if a total is over 21
 function bust(total) {
 	if(total > 21) {
 		// checkWin();
@@ -236,14 +237,7 @@ function bust(total) {
 	// }
 }
 
-function blackJack(player) {
-	if(player === 'player') {
-		document.getElementById('message').innerHTML = "BLACKJACK! YOU WIN!";
-	} else {
-		document.getElementById('message').innerHTML = "The dealer has BLACKJACK! YOU LOST!";
-	}
-}
-
+// automate dealer hand 
 function stand() {
 	// var dealerTotal = calculateTotal(dealerHand, 'dealer');
 	// var playerTotal = calculateTotal(playerHand, 'player');
@@ -281,6 +275,7 @@ function stand() {
 	// Dealer has more than 17 
 }
 
+// check if someone won
 function checkWin() {
 	// TODO: If the player or the dealer has not busted 
 	// check to see who has the higher value
