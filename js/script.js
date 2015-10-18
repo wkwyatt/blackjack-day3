@@ -3,6 +3,8 @@
 
 var deck = [];
 var placeInDeck = 0;
+var balance = 500;
+var bet = 0;
 // AMOUNT OF CARDS FOR PLAYER
 var playerTotalCards = 2;
 var dealerTotalCards = 2;
@@ -176,7 +178,7 @@ function placeCard(card, player, slot) {
 	var element = document.getElementById(currId);
 
 	// place card in html element
-	element.className = "card";
+	element.classList.remove("empty")
 	element.innerHTML = card;
 
 	// calc dealer total and check if they busted
@@ -335,7 +337,7 @@ function reset() {
 	var cards = document.getElementsByClassName('card');
 
 	for(i = 0;i < cards.length; i++){
-		cards[i].className = cards[i].className + " empty";
+		cards[i].classList.add("empty")
 		cards[i].innerHTML = ""
 	}
 

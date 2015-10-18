@@ -8,19 +8,19 @@
 .game-board {
 	display: block;
 	margin: 50px auto;
-	/*width: 100%;*/
-	max-width: 1024px;
-	height: auto;
+	max-width: 850px;
 	background-color: green;
 	border: 16px solid brown;
 	border-radius: 145px;
 }
 
+.game-board .game-board-header {
+	text-align: center;
+}
+
 .row {
 	position: relative;
-	margin: 55px;
-	height: auto;
-	/*background-color: red;*/
+	text-align: center;
 }
 
 .cards-row {
@@ -33,21 +33,18 @@
 	position: relative;
 	display: inline-block;
 	color: white;
-	font:36px Arial, serif;
-	height: 100%;
+	font:24px Arial, serif;
 	width: 200px;
 	text-align: center;
-	float: left;
 	padding-top: 35px;
-	/*background-color: blue;*/
 }
 
 .card {
 	position: relative;
 	display: inline-block;
 	margin: 5px 0 5px 5px;
-	height: 175px;
-	width: 100px;
+	height: 105px;
+	width: 60px;
 	text-align: center;
 	font-size: 24px;
 	line-height: 100px;
@@ -57,16 +54,63 @@
 	border:5px solid black;
 }
 
+.bet-wrapper {
+	line-height: 50%;
+	vertical-align: middle;
+	text-align: center;
+}
+
+	.bet-wrapper .chip {
+		display: inline-block;
+		width: 50px;
+		height: 50px;
+		color: white;
+		border-radius: 200%;
+		border:4px dashed black;
+		background-color: white;
+		line-height: 300%;
+		vertical-align: middle;
+	}
+		#five-chip {
+			background-color: #a01010;
+		}
+		#ten-chip {
+			background-color: #1313ab;
+		}
+		#twenty-five-chip {
+			background-color: #094609;
+		}
+		#hundred-chip {
+			background-color: black;
+			border-color: white;
+		}
+
+	.bet-wrapper .chip .inner-chip  {
+		border:1px solid black;
+		border-radius: 200%;
+	}
+
+	#total-bet {
+		display: inline-block;
+		font-size: 18px;
+		color: white;
+		margin-left: 50px;
+	}
+
+
 .empty {
 	background: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSh9yarybRY1JS8uqoZvQgQEYqqkOxkzGd-dcNVTvKlm0pypS9g") center no-repeat;
+	background-size: 80px;
 }
 
 
 
 .balance {
+	display: inline-block;
 	margin: auto;
 	width: 200px;	
 	color: white;
+	text-align: center;
 	font:24px Arial, serif;
 	background-color: red;
 }
@@ -83,25 +127,25 @@
 }
 .play-buttons-div {
 	position: relative;
-	/*top: 600px;*/
 	text-align: center;
 }
 
 .play-buttons {
 	margin:5px auto;
-	font:24px Arial, serif;
+	font:18px Arial, serif;
 	position: relative;
-	width: 200px;
+	width: 145px;
 	height: auto;
 	text-align: center;
 	background-color: black;
+	border-radius: 25px;
 	color: white;
 }
 
 #reset-button {
-	float:right;
-	margin-right: 100px;
+
 }
+
 @media (max-width: 1072px) and (min-width: 871px) {
 	.score {
 		display: block;
