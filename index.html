@@ -11,7 +11,7 @@
 		<div class="game-board">
 			<div class="game-board-header">
 				<div class="balance">
-					Bankroll $<span>500</span>
+					Bankroll $<span id="bankroll">500</span>
 				</div>
 				<button id="reset-button" class="play-buttons" onclick="reset()">Reset Game</button>
 			</div>
@@ -59,13 +59,13 @@
 			</div>
 			<div class="bet-wrapper">
 				<!-- chips divs -->
-				<div class="chip five-chip"><div class="inner-chip"><span>5</span></div></div>
-				<div class="chip ten-chip"><div class="inner-chip"><span>10</span></div></div>
-				<div class="chip twenty-five-chip"><div class="inner-chip"><span>25</span></div></div>
-				<div class="chip hundred-chip"><div class="inner-chip"><span>100</span></div></div>
+				<div class="chip five-chip" onclick="betValue(5)"><div class="inner-chip"><span>5</span></div></div>
+				<div class="chip ten-chip" onclick="betValue(10)"><div class="inner-chip"><span>10</span></div></div>
+				<div class="chip twenty-five-chip" onclick="betValue(25)"><div class="inner-chip"><span>25</span></div></div>
+				<div class="chip hundred-chip" onclick="betValue(100)"><div class="inner-chip"><span>100</span></div></div>
 
 				<!-- total bets div -->
-				<div id="total-bet">Total Bet:  <span>0</span></div>
+				<div id="total-bet-wrapper">Total Bet:  <span id="total-bet">0</span></div>
 				<div class="chip-stack">
 					<div class="chip five-chip"><div class="inner-chip"><span>5</span></div></div>
 					<div class="chip ten-chip"><div class="inner-chip"><span>10</span></div></div>
@@ -74,13 +74,13 @@
 				</div>
 			</div>
 			<div class="play-buttons-div">
-				<button class="play-buttons active game-buttons" id="draw-button" onclick="deal()">Deal</button>
-				<button class="play-buttons active game-buttons" id="hit-button" onclick="hit()">Hit</button>
-				<button class="play-buttons active game-buttons" id="stand-button" onclick="stand()">Stand</button>
-				<button class="play-buttons active game-buttons" id="rebet-button" onclick="bet()">Rebet</button>
-				<button class="play-buttons active game-buttons" id="clear-bet-button" onclick="clearBet()">Clear Bet</button>
-				<button class="play-buttons active game-buttons" id="new-hand-button" onclick="newHand()">New Hand</button>
-				<button class="play-buttons active game-buttons" id="bet-button" onclick="bet()">Place Bet</button>
+				<button class="play-buttons active game-buttons active" id="draw-button" onclick="deal()">Deal</button>
+				<button class="play-buttons active game-buttons hidden" id="hit-button" onclick="hit()">Hit</button>
+				<button class="play-buttons active game-buttons hidden" id="stand-button" onclick="stand()">Stand</button>
+				<button class="play-buttons active game-buttons hidden" id="rebet-button" onclick="rebet()">Rebet</button>
+				<button class="play-buttons active game-buttons active" id="clear-bet-button" onclick="clearBet()">Clear Bet</button>
+				<button class="play-buttons active game-buttons hidden" id="new-hand-button" onclick="reset()">New Hand</button>
+				<!-- <button class="play-buttons active game-buttons" id="bet-button" onclick="placeBet()">Place Bet</button> -->
 			</div>
 			<!-- <div class="game-result">
 				<span id="message">LET'S PLAY BLACKJACK!</span>

@@ -1,10 +1,14 @@
-// TODO: If the player or the dealer has not busted check to see who has the higher value
 
 
 var deck = [];
 var placeInDeck = 0;
-var balance = 500;
+var bankroll = 500;
 var bet = 0;
+var prevBet = 0;
+// IS A GAME BEING PLAYED
+var won = false;
+var draw = false;
+var playing = false;
 // AMOUNT OF CARDS FOR PLAYER
 var playerTotalCards = 2;
 var dealerTotalCards = 2;
@@ -99,7 +103,17 @@ function shuffleDeck() {
 
 // deal the starting hand 
 function deal() {
+	if (bet === 0) {
+		message.innerHTML = "PLACE A BET!";
+		return;
+	} else if (bankroll <= 0) {
+		message.innerHTML = "OUTTA MONEY!";
+		return;
+	}
+
+	message.innerHTML = "";
 	var deck = shuffleDeck();
+	placeBet();
 	playerHand = [ deck[0], deck[2] ];
 	dealerHand = [ deck[1], deck[3] ];
 	placeInDeck = 4;
@@ -111,26 +125,31 @@ function deal() {
 	placeCard(dealerHand[1], 'dealer', 'two');
 
 	if((playerTotal === 21) && (dealerTotal === 21)) {
-		console.log(message);
+		draw = true;
+		checkWin();
 		message.innerHTML = "IT'S A DRAW!";
-		for(i = 0;i < buttons.length;i++){
-			buttons[i].disabled = true;
-		}
+		return;
 	} else if(dealerTotal === 21) {
+		checkWin();
 		message.innerHTML = "DEALER HAS BLACKJACK!";
-		for(i = 0;i < buttons.length;i++){
-			buttons[i].disabled = true;
-		}
+		return;
 	} else if(playerTotal === 21) {
+		won = true;
+		checkWin();
 		message.innerHTML = "BLACKJACK! YOU WIN!!";
-		for(i = 0;i < buttons.length;i++){
-			buttons[i].disabled = true;
-		}
+		return;
 	}
-	// calculateTotal(playerHand, 'player');
-	// calculateTotal(dealerHand, 'dealer');
+	
+	// remove deal & clear bet button
+	disableAllBtns();
 
-	document.getElementById('draw-button').disabled = true;
+	// show hit & stand button
+	document.getElementById('hit-button').classList.remove("hidden");
+	document.getElementById('hit-button').classList.add('active');
+	document.getElementById('stand-button').classList.remove('hidden');
+	document.getElementById('stand-button').classList.add('active');	
+
+	// document
 }
 
 // calculate the total of a users hand
@@ -279,11 +298,7 @@ function stand() {
 
 // check if someone won
 function checkWin() {
-	// TODO: If the player or the dealer has not busted 
-	// check to see who has the higher value
-	// var dealerTotal = calculateTotal(dealerHand, 'dealer');
-	// var playerTotal = calculateTotal(playerHand, 'player');
-	// var winner;
+	// If the player or the dealer has not busted 
 	var gameOver = false;
 
 	if(playerBust){
@@ -291,13 +306,16 @@ function checkWin() {
 		gameOver = true;
 	} else if(dealerBust) {
 		message.innerHTML = "YOU WIN!! DEALER BUSTED"
+		won = true;
 		gameOver = true;
 	} else {
 		while(playerStand) {
 			if (playerTotal > dealerTotal) {
 				message.innerHTML = "YOU WIN! You have " + playerTotal + " and the dealer has " + dealerTotal;
+				won = true;
 			} else if (playerTotal === dealerTotal) {
 				message.innerHTML = "IT'S A DRAW!"
+				draw = true;
 			} else {
 				message.innerHTML = "YOU LOST! You have " + playerTotal + " and the dealer has " + dealerTotal;
 			}
@@ -306,13 +324,71 @@ function checkWin() {
 		}
 	}
 
-	if(gameOver){
-		for(i = 0;i < buttons.length;i++){
-			buttons[i].disabled = true;
-		}
+	if(playerTotal === 21 || dealerTotal === 21){
+		gameOver = true;
 	}
+
+	if(draw) {
+		bankroll += bet;
+		document.getElementById('bankroll').innerHTML = bankroll;
+	} else if(won){
+		bankroll += bet * 2;
+		document.getElementById('bankroll').innerHTML = bankroll;
+	}
+
+	if(gameOver){
+		disableAllBtns();
+		document.getElementById('rebet-button').classList.remove('hidden');
+		document.getElementById('rebet-button').classList.add('active');
+		document.getElementById('new-hand-button').classList.remove('hidden');
+		document.getElementById('new-hand-button').classList.add('active');
+	}
+
+	draw = false;
+	won = false;
 }
 
+function disableAllBtns() {
+	for(i = 0;i < buttons.length;i++){
+			buttons[i].classList.remove('active');
+			buttons[i].classList.add('hidden');
+	}
+}
+////////////////////////////
+// betting functions
+
+// add bet to total bet being placed
+function betValue(chipValue) {
+	if(playing) {
+		return;
+	}
+	if((bet + chipValue) <= bankroll) {
+		bet += chipValue;
+	}
+	document.getElementById("total-bet").innerHTML = bet;
+}
+
+// place a bet
+function placeBet() {
+	playing = true;
+	prevBet = bet;
+	bankroll -= bet;
+	document.getElementById("bankroll").innerHTML = bankroll
+}
+
+// rebet the previous bet
+function rebet() {
+	// playing = false;
+	reset();
+	bet = prevBet;
+	document.getElementById("total-bet").innerHTML = bet;
+
+}
+// clear the bet
+function clearBet() {
+	bet = 0;
+	document.getElementById("total-bet").innerHTML = bet;
+}
 // reset game function
 function reset() {
     //empty the deck
@@ -326,13 +402,14 @@ function reset() {
 
     deck = [];
     placeInDeck = 0;
+    bet = 0;
 	playerTotalCards = 2;
 	dealerTotalCards = 2;
 	playerHand = [];
 	dealerHand = [];
 	dealerBust = false;
 	playerBust = false;
-	document.getElementById('message').innerHTML = "Play Again!";
+	document.getElementById('message').innerHTML = "Lets Play!";
 	
 	var cards = document.getElementsByClassName('card');
 
@@ -341,11 +418,23 @@ function reset() {
 		cards[i].innerHTML = ""
 	}
 
+	// reset player totals
 	document.getElementById('player-total').innerHTML = 0;
 	document.getElementById('dealer-total').innerHTML = 0;
-	for(i = 0;i < buttons.length;i++){
-		buttons[i].disabled = false;
-	}
+	document.getElementById('total-bet').innerHTML = bet;
+	
+	// reset playing buttons 
+	disableAllBtns();
+	document.getElementById('draw-button').classList.remove('hidden');
+	document.getElementById('draw-button').classList.add('active');
+	document.getElementById('rebet-button').classList.remove('hidden');
+	document.getElementById('rebet-button').classList.add('active');
+	document.getElementById('clear-bet-button').classList.remove('hidden');
+	document.getElementById('clear-bet-button').classList.add('active');
 
+	// for(i = 0;i < buttons.length;i++){
+	// 	buttons[i].disabled = false;
+	// }
+	playing = false;
 	playerStand = false;
 }

@@ -59,7 +59,7 @@
 	vertical-align: middle;
 	text-align: center;
 }
-	#total-bet {
+	#total-bet-wrapper {
 		display: inline-block;
 		font-size: 18px;
 		color: white;
@@ -94,11 +94,12 @@
 	}
 
 	.chip.hundred-chip {
-		background-color: black;
+		background-color: #272626;
 		border-color: white;
 	}
 
 .chip-stack {
+	position: absolute;
 	display: inline;
 	margin-left: 25px;
 }
@@ -111,8 +112,6 @@
 	background: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSh9yarybRY1JS8uqoZvQgQEYqqkOxkzGd-dcNVTvKlm0pypS9g") center no-repeat;
 	background-size: 80px;
 }
-
-
 
 .balance {
 	display: inline-block;
@@ -127,7 +126,7 @@
 .game-result {
 	position: relative;
 	bottom:10px;
-	margin: 35px auto;
+	margin: 35px auto 0;
 	width: 75%;
 	color: white;
 	font:24px Arial, serif;
@@ -150,6 +149,12 @@
 	border-radius: 25px;
 	color: white;
 }
+	.play-buttons.active {
+		display: inline-block;
+	}
+	.play-buttons.hidden {
+		display: none;
+	}
 
 #reset-button {
 
