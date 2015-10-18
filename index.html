@@ -59,14 +59,19 @@
 			</div>
 			<div class="bet-wrapper">
 				<!-- chips divs -->
-				<div id="five-chip" class="chip"><div class="inner-chip"><span>5</span></div></div>
-				<div id="ten-chip" class="chip"><div class="inner-chip"><span>10</span></div></div>
-				<div id="twenty-five-chip" class="chip"><div class="inner-chip"><span>25</span></div></div>
-				<div id="hundred-chip" class="chip"><div class="inner-chip"><span>100</span></div></div>
+				<div class="chip five-chip"><div class="inner-chip"><span>5</span></div></div>
+				<div class="chip ten-chip"><div class="inner-chip"><span>10</span></div></div>
+				<div class="chip twenty-five-chip"><div class="inner-chip"><span>25</span></div></div>
+				<div class="chip hundred-chip"><div class="inner-chip"><span>100</span></div></div>
 
 				<!-- total bets div -->
 				<div id="total-bet">Total Bet:  <span>0</span></div>
-
+				<div class="chip-stack">
+					<div class="chip five-chip"><div class="inner-chip"><span>5</span></div></div>
+					<div class="chip ten-chip"><div class="inner-chip"><span>10</span></div></div>
+					<div class="chip twenty-five-chip"><div class="inner-chip"><span>25</span></div></div>
+					<div class="chip hundred-chip"><div class="inner-chip"><span>100</span></div></div>
+				</div>
 			</div>
 			<div class="play-buttons-div">
 				<button class="play-buttons active game-buttons" id="draw-button" onclick="deal()">Deal</button>
