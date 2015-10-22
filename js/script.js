@@ -24,7 +24,7 @@ var playerStand = false;
 var playerTotal = 0;
 var dealerTotal = 0;
 // SHORTCUTS FOR ELEMENT DIVS AND BUTTONS
-var message = document.getElementById("message");
+var message = $("#message");
 var buttons = document.getElementsByClassName("game-buttons");
 
 // put cards in the deck array
@@ -144,10 +144,10 @@ function deal() {
 	disableAllBtns();
 
 	// show hit & stand button
-	document.getElementById('hit-button').classList.remove("hidden");
-	document.getElementById('hit-button').classList.add('active');
-	document.getElementById('stand-button').classList.remove('hidden');
-	document.getElementById('stand-button').classList.add('active');	
+	$('#hit-button').classList.remove("hidden");
+	$('#hit-button').classList.add('active');
+	$('#stand-button').classList.remove('hidden');
+	$('#stand-button').classList.add('active');	
 
 	// document
 }
@@ -252,9 +252,9 @@ function bust(total) {
 		return false;
 	}
 	// if(player) {
-	// 	document.getElementById('message').innerHTML = "You have busted!  Better luck next time!";
+	// 	$('#message').innerHTML = "You have busted!  Better luck next time!";
 	// } else {
-	// 	document.getElementById('message').innerHTML = "The dealer busted!  You win!";
+	// 	$('#message').innerHTML = "The dealer busted!  You win!";
 	// }
 }
 
@@ -330,18 +330,18 @@ function checkWin() {
 
 	if(draw) {
 		bankroll += bet;
-		document.getElementById('bankroll').innerHTML = bankroll;
+		$('#bankroll').innerHTML = bankroll;
 	} else if(won){
 		bankroll += bet * 2;
-		document.getElementById('bankroll').innerHTML = bankroll;
+		$('#bankroll').innerHTML = bankroll;
 	}
 
 	if(gameOver){
 		disableAllBtns();
-		document.getElementById('rebet-button').classList.remove('hidden');
-		document.getElementById('rebet-button').classList.add('active');
-		document.getElementById('new-hand-button').classList.remove('hidden');
-		document.getElementById('new-hand-button').classList.add('active');
+		$('#rebet-button').classList.remove('hidden');
+		$('#rebet-button').classList.add('active');
+		$('#new-hand-button').classList.remove('hidden');
+		$('#new-hand-button').classList.add('active');
 	}
 
 	draw = false;
@@ -365,7 +365,7 @@ function betValue(chipValue) {
 	if((bet + chipValue) <= bankroll) {
 		bet += chipValue;
 	}
-	document.getElementById("total-bet").innerHTML = bet;
+	$("#total-bet").innerHTML = bet;
 }
 
 // place a bet
@@ -373,7 +373,7 @@ function placeBet() {
 	playing = true;
 	prevBet = bet;
 	bankroll -= bet;
-	document.getElementById("bankroll").innerHTML = bankroll
+	$("#bankroll").innerHTML = bankroll
 }
 
 // rebet the previous bet
@@ -381,13 +381,13 @@ function rebet() {
 	// playing = false;
 	reset();
 	bet = prevBet;
-	document.getElementById("total-bet").innerHTML = bet;
+	$("#total-bet").innerHTML = bet;
 
 }
 // clear the bet
 function clearBet() {
 	bet = 0;
-	document.getElementById("total-bet").innerHTML = bet;
+	$("#total-bet").innerHTML = bet;
 }
 // reset game function
 function reset() {
@@ -409,7 +409,7 @@ function reset() {
 	dealerHand = [];
 	dealerBust = false;
 	playerBust = false;
-	document.getElementById('message').innerHTML = "Lets Play!";
+	$('#message').innerHTML = "Lets Play!";
 	
 	var cards = document.getElementsByClassName('card');
 
@@ -419,18 +419,18 @@ function reset() {
 	}
 
 	// reset player totals
-	document.getElementById('player-total').innerHTML = 0;
-	document.getElementById('dealer-total').innerHTML = 0;
-	document.getElementById('total-bet').innerHTML = bet;
+	$('#player-total').innerHTML = 0;
+	$('#dealer-total').innerHTML = 0;
+	$('#total-bet').innerHTML = bet;
 	
 	// reset playing buttons 
 	disableAllBtns();
-	document.getElementById('draw-button').classList.remove('hidden');
-	document.getElementById('draw-button').classList.add('active');
-	document.getElementById('rebet-button').classList.remove('hidden');
-	document.getElementById('rebet-button').classList.add('active');
-	document.getElementById('clear-bet-button').classList.remove('hidden');
-	document.getElementById('clear-bet-button').classList.add('active');
+	$('#draw-button').classList.remove('hidden');
+	$('#draw-button').classList.add('active');
+	$('#rebet-button').classList.remove('hidden');
+	$('#rebet-button').classList.add('active');
+	$('#clear-bet-button').classList.remove('hidden');
+	$('#clear-bet-button').classList.add('active');
 
 	// for(i = 0;i < buttons.length;i++){
 	// 	buttons[i].disabled = false;
