@@ -25,7 +25,7 @@ var playerTotal = 0;
 var dealerTotal = 0;
 // SHORTCUTS FOR ELEMENT DIVS AND BUTTONS
 var message = $("#message");
-var buttons = document.getElementsByClassName("game-buttons");
+var buttons = $(".game-buttons");
 
 // put cards in the deck array
 function setDeck(){
@@ -76,7 +76,7 @@ function setDeck(){
 		}
 	}
 
-	console.log(deck);
+	// console.log(deck);
 }
 
 // randomize the deck array
@@ -95,7 +95,7 @@ function shuffleDeck() {
 		deck[card2] = deck[card1];
 		deck[card1] = temp;
 	}	
-	console.log(deck);
+	// console.log(deck);
 
 	// return deck array
 	return deck;
@@ -104,14 +104,14 @@ function shuffleDeck() {
 // deal the starting hand 
 function deal() {
 	if (bet === 0) {
-		message.innerHTML = "PLACE A BET!";
+		message.html("PLACE A BET!");
 		return;
 	} else if (bankroll <= 0) {
-		message.innerHTML = "OUTTA MONEY!";
+		message.html("OUTTA MONEY!");
 		return;
 	}
 
-	message.innerHTML = "";
+	message.html("");
 	var deck = shuffleDeck();
 	placeBet();
 	playerHand = [ deck[0], deck[2] ];
@@ -127,16 +127,16 @@ function deal() {
 	if((playerTotal === 21) && (dealerTotal === 21)) {
 		draw = true;
 		checkWin();
-		message.innerHTML = "IT'S A DRAW!";
+		message.html("IT'S A DRAW!");
 		return;
 	} else if(dealerTotal === 21) {
 		checkWin();
-		message.innerHTML = "DEALER HAS BLACKJACK!";
+		message.html("DEALER HAS BLACKJACK!");
 		return;
 	} else if(playerTotal === 21) {
 		won = true;
 		checkWin();
-		message.innerHTML = "BLACKJACK! YOU WIN!!";
+		message.html("BLACKJACK! YOU WIN!!");
 		return;
 	}
 	
@@ -144,10 +144,10 @@ function deal() {
 	disableAllBtns();
 
 	// show hit & stand button
-	$('#hit-button').classList.remove("hidden");
-	$('#hit-button').classList.add('active');
-	$('#stand-button').classList.remove('hidden');
-	$('#stand-button').classList.add('active');	
+	$('#hit-button').removeClass("hidden");
+	$('#hit-button').addClass('active');
+	$('#stand-button').removeClass('hidden');
+	$('#stand-button').addClass('active');	
 
 	// document
 }
@@ -183,8 +183,8 @@ function calculateTotal(hand, player) {
 
 	}
 
-	var user = player + "-total";
-	document.getElementById(user).innerHTML = total;
+	var user = "#" + player + "-total";
+	$(user).html(total);
 
 	// checkWin();
 
@@ -193,12 +193,11 @@ function calculateTotal(hand, player) {
 
 // place the card on the screen
 function placeCard(card, player, slot) {
-	var currId = player + "-card-" + slot;
-	var element = document.getElementById(currId);
+	var currId = $("#" + player + "-card-" + slot);
 
 	// place card in html element
-	element.classList.remove("empty")
-	element.innerHTML = card;
+	currId.removeClass("empty");
+	currId.html(card);
 
 	// calc dealer total and check if they busted
 	dealerTotal = calculateTotal(dealerHand, 'dealer');
@@ -252,9 +251,9 @@ function bust(total) {
 		return false;
 	}
 	// if(player) {
-	// 	$('#message').innerHTML = "You have busted!  Better luck next time!";
+	// 	$('#message').html("You have busted!  Better luck next time!";
 	// } else {
-	// 	$('#message').innerHTML = "The dealer busted!  You win!";
+	// 	$('#message').html("The dealer busted!  You win!";
 	// }
 }
 
@@ -302,46 +301,46 @@ function checkWin() {
 	var gameOver = false;
 
 	if(playerBust){
-		message.innerHTML = "BUSTED!! YOU LOST!"
+		message.html("BUSTED!! YOU LOST!");
 		gameOver = true;
 	} else if(dealerBust) {
-		message.innerHTML = "YOU WIN!! DEALER BUSTED"
+		message.html("YOU WIN!! DEALER BUSTED");
 		won = true;
 		gameOver = true;
 	} else {
 		while(playerStand) {
 			if (playerTotal > dealerTotal) {
-				message.innerHTML = "YOU WIN! You have " + playerTotal + " and the dealer has " + dealerTotal;
+				message.html("YOU WIN! You have " + playerTotal + " and the dealer has " + dealerTotal);
 				won = true;
 			} else if (playerTotal === dealerTotal) {
-				message.innerHTML = "IT'S A DRAW!"
+				message.html("IT'S A DRAW!");
 				draw = true;
 			} else {
-				message.innerHTML = "YOU LOST! You have " + playerTotal + " and the dealer has " + dealerTotal;
+				message.html("YOU LOST! You have " + playerTotal + " and the dealer has " + dealerTotal);
 			}
 			gameOver = true;	
 			playerStand = false;
 		}
 	}
 
-	if(playerTotal === 21 || dealerTotal === 21){
-		gameOver = true;
-	}
+	// if(playerTotal === 21 || dealerTotal === 21){
+	// 	gameOver = true;
+	// }
 
 	if(draw) {
 		bankroll += bet;
-		$('#bankroll').innerHTML = bankroll;
+		$('#bankroll').html(bankroll);
 	} else if(won){
 		bankroll += bet * 2;
-		$('#bankroll').innerHTML = bankroll;
+		$('#bankroll').html(bankroll);
 	}
 
 	if(gameOver){
 		disableAllBtns();
-		$('#rebet-button').classList.remove('hidden');
-		$('#rebet-button').classList.add('active');
-		$('#new-hand-button').classList.remove('hidden');
-		$('#new-hand-button').classList.add('active');
+		$('#rebet-button').removeClass('hidden');
+		$('#rebet-button').addClass('active');
+		$('#new-hand-button').removeClass('hidden');
+		$('#new-hand-button').addClass('active');
 	}
 
 	draw = false;
@@ -349,10 +348,8 @@ function checkWin() {
 }
 
 function disableAllBtns() {
-	for(i = 0;i < buttons.length;i++){
-			buttons[i].classList.remove('active');
-			buttons[i].classList.add('hidden');
-	}
+	buttons.removeClass('active');
+	buttons.addClass('hidden');
 }
 ////////////////////////////
 // betting functions
@@ -365,7 +362,7 @@ function betValue(chipValue) {
 	if((bet + chipValue) <= bankroll) {
 		bet += chipValue;
 	}
-	$("#total-bet").innerHTML = bet;
+	$("#total-bet").html(bet);
 }
 
 // place a bet
@@ -373,7 +370,7 @@ function placeBet() {
 	playing = true;
 	prevBet = bet;
 	bankroll -= bet;
-	$("#bankroll").innerHTML = bankroll
+	$("#bankroll").html(bankroll);
 }
 
 // rebet the previous bet
@@ -381,13 +378,17 @@ function rebet() {
 	// playing = false;
 	reset();
 	bet = prevBet;
-	$("#total-bet").innerHTML = bet;
+	if (bet > bankroll) {
+		bet = bankroll;
+	}
+
+	$("#total-bet").html(bet);
 
 }
 // clear the bet
 function clearBet() {
 	bet = 0;
-	$("#total-bet").innerHTML = bet;
+	$("#total-bet").html(bet);
 }
 // reset game function
 function reset() {
@@ -409,28 +410,24 @@ function reset() {
 	dealerHand = [];
 	dealerBust = false;
 	playerBust = false;
-	$('#message').innerHTML = "Lets Play!";
+	$('#message').html("Lets Play!");
 	
-	var cards = document.getElementsByClassName('card');
-
-	for(i = 0;i < cards.length; i++){
-		cards[i].classList.add("empty")
-		cards[i].innerHTML = ""
-	}
-
+	$('.card').addClass('empty');
+	$('.card').html("");
+	
 	// reset player totals
-	$('#player-total').innerHTML = 0;
-	$('#dealer-total').innerHTML = 0;
-	$('#total-bet').innerHTML = bet;
+	$('#player-total').html(0);
+	$('#dealer-total').html(0);
+	$('#total-bet').html(bet);
 	
 	// reset playing buttons 
 	disableAllBtns();
-	$('#draw-button').classList.remove('hidden');
-	$('#draw-button').classList.add('active');
-	$('#rebet-button').classList.remove('hidden');
-	$('#rebet-button').classList.add('active');
-	$('#clear-bet-button').classList.remove('hidden');
-	$('#clear-bet-button').classList.add('active');
+	$('#draw-button').removeClass('hidden');
+	$('#draw-button').addClass('active');
+	$('#rebet-button').removeClass('hidden');
+	$('#rebet-button').addClass('active');
+	$('#clear-bet-button').removeClass('hidden');
+	$('#clear-bet-button').addClass('active');
 
 	// for(i = 0;i < buttons.length;i++){
 	// 	buttons[i].disabled = false;
@@ -438,3 +435,10 @@ function reset() {
 	playing = false;
 	playerStand = false;
 }
+
+function reloadGame() {
+	reset();
+	bankroll = 500;
+	$('#bankroll').html(bankroll);
+}
+
