@@ -1,5 +1,5 @@
 # BlackJack Game
-[Live Demo](wkwyatt.com/blackjack/)
+<!-- [Live Demo](wkwyatt.com/blackjack/) -->
 
 ## Summary
 Javascript blackjack game displaying basic Javascript, HTML, and CSS skills:
