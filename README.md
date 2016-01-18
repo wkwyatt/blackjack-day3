@@ -4,8 +4,8 @@
 Javascript blackjack game displaying basic Javascript, HTML, and CSS skills:
 
 ## Screenshots
-![](https://github.com/wkwyatt/blackjack-day3/blob/gh-readme/main.png)
-![](https://github.com/wkwyatt/blackjack-day3/blob/gh-readme/game.png)
+![](https://github.com/wkwyatt/blackjack-day3/blob/gh-readme/gh-readme/game.png)
+![](https://github.com/wkwyatt/blackjack-day3/blob/gh-readme/gh-readme/main.png)
 
 ##### Array manipulation
 ```javascript
